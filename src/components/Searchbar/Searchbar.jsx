@@ -1,24 +1,23 @@
 import css from './index.module.css';
 
-const SearchBar = ({ onSubmit }) => {
-  return (
-    <header className={css.searchbar}>
-      <form className={css.form} onSubmit={onSubmit}>
-        <button type="submit" className={css.button}>
-          <span className={css['button-label']}>Search</span>
-        </button>
+const Searchbar = ({ onSearchSubmit }) => (
+  <header className={css.searchbar}>
+    <form className={css.form} onSubmit={onSearchSubmit}>
+      <button type="submit" className={css.button}>
+        <span className={css['button-label']}>Search</span>
+      </button>
 
-        <input
-          className={css.input}
-          type="text"
-          name="search"
-          autoComplete="off"
-          autoFocus
-          placeholder="Search images and photos"
-        />
-      </form>
-    </header>
-  );
-};
+      <input
+        className={css.input}
+        type="text"
+        autoComplete="off"
+        autoFocus
+        placeholder="Search images/pictures/photos"
+        name="query"
+        required
+      />
+    </form>
+  </header>
+);
 
-export default SearchBar;
+export default Searchbar;

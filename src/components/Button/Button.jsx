@@ -1,11 +1,9 @@
 import css from './index.module.css';
 
-const Button = props => {
-  return (
-    <button className={css.button} {...props}>
-      Load More
-    </button>
-  );
-};
+const Button = ({ onClick }) => (
+  <button className={css.button} onClick={onClick}>
+    Load more
+  </button>
+);
 
 export default Button;
