@@ -1,4 +1,4 @@
-import React, { Component, createRef } from 'react';
+import { Component } from 'react';
 import css from './index.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -19,8 +19,6 @@ class App extends Component {
     onLoadMore: false,
   };
 
-  galleryRef = createRef();
-
   showLoader = () => {
     this.setState({ isLoading: true });
   };
@@ -40,18 +38,15 @@ class App extends Component {
   };
 
   loadImages = async () => {
-    // launching spinner
     this.showLoader();
     try {
       const { hits, onLoadMore } = await fetchImages(
         this.state.query,
         this.state.page
       );
-
       if (hits.length === 0) {
         throw new Error('No images found. Please try a different query.');
       }
-
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
         onLoadMore: onLoadMore,
@@ -59,22 +54,8 @@ class App extends Component {
     } catch (error) {
       toast.error(error.message);
     } finally {
-      // hiding unnecessary spinner
       this.hideLoader();
     }
-
-    if (this.state.page > 1) {
-      this.scrollDown();
-    }
-  };
-
-  scrollDown = () => {
-    const { clientHeight } = document.documentElement;
-
-    window.scrollBy({
-      top: clientHeight * 2,
-      behavior: 'smooth',
-    });
   };
 
   componentDidUpdate(_, prevState) {
@@ -84,18 +65,12 @@ class App extends Component {
     ) {
       this.loadImages();
     }
-
-    if (!prevState.images.length && this.state.images.length) {
-      this.scrollDown();
-      setTimeout(() => this.hideLoader(), 250);
-    }
   }
-  //  open large image in modal window
+
   onImageClick = image => {
     this.setState({ modalImg: image });
   };
 
-  //  close modal window
   onCloseModal = () => {
     this.setState({ modalImg: null });
   };
@@ -109,8 +84,6 @@ class App extends Component {
         <ImageGallery
           images={this.state.images}
           onImageClick={this.onImageClick}
-          galleryRef={this.galleryRef}
-          //  galleryRef is passed as a prop to the ImageGallery component so that it can be used to reference the gallery element for scrolling
         />
         {this.state.onLoadMore && this.state.images.length > 0 && (
           <Button

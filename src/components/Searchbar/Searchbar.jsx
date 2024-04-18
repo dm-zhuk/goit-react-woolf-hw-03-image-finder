@@ -12,7 +12,7 @@ const Searchbar = ({ onSearchSubmit }) => (
         type="text"
         autoComplete="off"
         autoFocus
-        placeholder="Search images/pictures/photos"
+        placeholder="Search images"
         name="query"
         required
       />
